@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+require 'docopt'
+require_relative '../lib/osc'
+require_relative '../lib/zoekt-index'
+
+
+
+doc = <<DOCOPT
+Prepare and index code with Zoekt.
+
+Usage:
+	#{__FILE__} prepare <codestream> <package>
+	#{__FILE__} index <codestream>
+	#{__FILE__} -h | --help
+
+Options:
+	- --help Show this screen.
+
+DOCOPT
+
+begin
+	arguments = Docopt::docopt(doc)
+rescue Docopt::Exit => e
+	puts e.message
+	Process.exit(1)
+end
+
+case 
+when arguments["prepare"]
+ 	c = OSC.new arguments["<codestream>"], arguments["<package>"]
+	if c.remote_exist?
+		if c.local_exist?
+ 			puts c.update
+		else
+			puts c.checkout
+		end
+		c.go_to_code
+		c.quilt
+		c.go_to_root
+	else
+		puts "#{ARGV[0]} #{ARGV[1]} doesn\'t exist"
+	end
+when arguments["index"]
+	ZoektIndex.new(arguments["<codestream>"]).run
+end
+
+
+
