@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 require 'docopt'
-require_relative '../lib/osc'
-require_relative '../lib/zoekt-index'
-
+require_relative '../lib/zoekt-helper'
 
 
 doc = <<DOCOPT
