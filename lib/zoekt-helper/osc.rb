@@ -1,5 +1,3 @@
-require_relative "./zoekt-helper"
-
 class OSC
 	attr_accessor :codestream, :package
 

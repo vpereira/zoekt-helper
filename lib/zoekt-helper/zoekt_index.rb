@@ -1,5 +1,3 @@
-require_relative "./zoekt-helper"
-
 class NoCodeStreamFound < StandardError
 	def initialize(codestream)
 		super("codestream #{codestream} not found")

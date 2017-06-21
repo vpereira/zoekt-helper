@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 require_relative './helper'
 
-class OSCTest < Minitest::Test
+class ZoektIndexTest < Minitest::Test
 	def test_initialize
-		assert OSC.new("FOO", "BAR") != nil
+		assert ZoektIndex.new("FOO") != nil
 	end
 end
