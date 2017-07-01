@@ -1,12 +1,13 @@
 class OSC
 	attr_accessor :codestream, :package
 
-	SRC = "/root/sources"
+	SRC = File.join(ENV["HOME"],"sources")
 
 	def initialize(codestream, package)
 		@codestream = codestream
 		@package = package
 		@spec = "#{@package}.spec"
+		raise Errno::ENOENT, "osc not initialized, please configure it first" unless File.exists? File.join(ENV["HOME"],".oscrc")
 
 		FileUtils.cd(SRC)
 	end
@@ -18,7 +19,7 @@ class OSC
 	def checkout
 		execute(["co",@codestream,@package])
 	end
-	
+
 	def remote_exist?
 		execute(["ls",@codestream,@package])
 	end
@@ -36,16 +37,15 @@ class OSC
 	end
 
 	def quilt
-		begin 
+		begin
 			::Cheetah.run("quilt","setup", @spec, stdout: :capture)
-		rescue Cheetah::ExecutionFailed 
+		rescue Cheetah::ExecutionFailed
 		end
 	end
-	
-	private 
+
+	private
 	def execute(args)
 		::Cheetah.run("osc","-A", "https://api.suse.de", *args, stdout: :capture)
 	end
 
 end
-

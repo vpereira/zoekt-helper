@@ -8,7 +8,7 @@ end
 class ZoektIndex
 	attr_accessor :procs, :file_limit
 
-	SRC = "/root/sources"
+	SRC = File.join(ENV["HOME"],"sources")
 
 	def initialize(codestream)
 		@codestream = codestream
@@ -18,8 +18,7 @@ class ZoektIndex
 
 	def run
 		raise NoCodeStreamFound.new(@codestream) unless File.directory?(File.join(SRC,@codestream))
-		FileUtils.cd(File.join(SRC,@codestream)) 		
+		FileUtils.cd(File.join(SRC,@codestream))
 		puts ::Cheetah.run("zoekt-index","-parallelism",@procs,"-file_limit",@file_limit,".",stdout: :capture)
 	end
 end
-
