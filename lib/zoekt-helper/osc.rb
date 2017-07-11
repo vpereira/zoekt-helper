@@ -45,7 +45,7 @@ class OSC
 
 	def self.list_packages 
 		FileUtils.cd(SRC)
-		::Cheetah.run("/usr/bin/ls","*/**", stdout: :capture)
+		Dir.glob("*/**")
 	end
 
 
