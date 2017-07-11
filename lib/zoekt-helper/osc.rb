@@ -43,7 +43,7 @@ class OSC
 		end
 	end
 
-	def list_packages 
+	def self.list_packages 
 		FileUtils.cd(SRC)
 		::Cheeta.run("/usr/bin/ls","*/**", stdout: :capture)
 	end
