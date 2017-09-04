@@ -49,6 +49,12 @@ class OSC
 		end
 	end
 
+	def self.list_packages 
+		FileUtils.cd(SRC)
+		Dir.glob("*/**")
+	end
+
+
 	private
 	def execute(args)
 		::Cheetah.run("osc","-A", "https://api.suse.de", *args, stdout: :capture)
