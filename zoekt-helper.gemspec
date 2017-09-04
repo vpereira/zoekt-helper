@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'zoekt-helper'
-  s.version     = '0.0.1'
+  s.version     = '0.0.6'
   s.date        = '2017-06-20'
   s.summary     = "Hola!"
   s.description = "A simple hello world gem"
