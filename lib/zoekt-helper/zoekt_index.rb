@@ -10,7 +10,7 @@ class ZoektIndex
 
 	SRC = File.join(ENV["HOME"],"sources")
 
-	def initialize(codestream)
+	def initialize(codestream, procs = 2)
 		@codestream = codestream
 		@procs = 2
 		@ignore_dirs = ".git,.hg,.svn,.osc"
