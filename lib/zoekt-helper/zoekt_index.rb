@@ -20,6 +20,6 @@ class ZoektIndex
 	def run
 		raise NoCodeStreamFound.new(@codestream) unless File.directory?(File.join(SRC,@codestream))
 		FileUtils.cd(File.join(SRC,@codestream))
-		puts ::Cheetah.run("zoekt-index","-ignore_dirs",@ignore_dirs,"-parallelism",@procs,"-file_limit",@file_limit,".",stdout: :capture)
+		::Cheetah.run("zoekt-index","-ignore_dirs",@ignore_dirs,"-parallelism",@procs,"-file_limit",@file_limit,".",stdout: :capture)
 	end
 end
