@@ -12,7 +12,7 @@ class ZoektIndex
 
 	def initialize(codestream, procs = 2)
 		@codestream = codestream
-		@procs = 2
+		@procs = procs
 		@ignore_dirs = ".git,.hg,.svn,.osc"
 		@file_limit = 10_000_000 # 10 Mb
 	end
