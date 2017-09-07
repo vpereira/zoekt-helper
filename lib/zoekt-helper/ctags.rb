@@ -16,8 +16,8 @@ class Ctags
 
   	def run
   		raise NoCodeStreamFound.new(@codestream) unless File.directory?(File.join(SRC,@codestream))
-  		FileUtils.cd(File.join(SRC,@codestream))
-      File.open("ctags.json") do |f|
+  		FileUtils.cd(SRC)
+      File.open("ctags.json","w") do |f|
   		 f.write Cheetah.run("universal-ctags","--recurse=yes","--fields=*","--output-format=json", ".",stdout: :capture)
       end
   	end
