@@ -1,15 +1,19 @@
 class OSC
 	attr_accessor :codestream, :package
-
+	# default path
 	SRC = File.join(ENV["HOME"],"sources")
 
-	def initialize(codestream, package)
+	def initialize(codestream, package, directory=SRC)
 		@codestream = codestream
 		@package = package
 		@spec = "#{@package}.spec"
-		raise Errno::ENOENT, "osc not initialized, please configure it first" unless File.exists? File.join(ENV["HOME"],".oscrc")
+		# configure your osc first
+		unless File.exists? File.join(ENV["HOME"],".oscrc")
+			raise Errno::ENOENT, "osc not initialized, please configure it first" 
+		end
+		@directory = directory
 
-		FileUtils.cd(SRC)
+		FileUtils.cd(@directory)
 	end
 
   	def delete
@@ -31,26 +35,26 @@ class OSC
 	end
 
 	def local_exist?
-		File.directory?(File.join(SRC,@codestream,@package))
+		File.directory?(File.join(@directory,@codestream,@package))
 	end
 
 	def go_to_root
-		FileUtils.cd(SRC)
+		FileUtils.cd(@directory)
 	end
 
 	def go_to_code
-		FileUtils.cd(File.join(SRC,@codestream,@package))
+		FileUtils.cd(File.join(@directory,@codestream,@package))
 	end
 
 	def quilt
 		begin
 			::Cheetah.run("quilt","setup", @spec, stdout: :capture)
-		rescue Cheetah::ExecutionFailed
+			# rescue Cheetah::ExecutionFailed
 		end
 	end
 
 	def self.list_packages 
-		FileUtils.cd(SRC)
+		FileUtils.cd(@directory)
 		Dir.glob("*/**")
 	end
 

@@ -7,12 +7,15 @@ doc = <<DOCOPT
 Prepare and index code with Zoekt.
 
 Usage:
-	#{__FILE__} prepare <codestream> <package>
-	#{__FILE__} index <codestream>
+	#{__FILE__} prepare <codestream> <package> [--sources=<dir>]
+	#{__FILE__} index <codestream> [--sources=<dir>] [--indexdir=<dir>] [--ncpus=<ncpus>]
 	#{__FILE__} -h | --help
 
 Options:
-	- --help Show this screen.
+	--ncpus=<ncpus>	 Number of cpus to be used by the index [default: 2]
+	--indexdir=<dir> Directory where index should be located [default: #{ENV['HOME']}/.zoekt]
+	--sources=<dir>	 Directory where sources are located [default: #{ENV['HOME']}/sources]
+	- --help 	 Show this screen.
 
 DOCOPT
 
@@ -25,7 +28,7 @@ end
 
 case 
 when arguments["prepare"]
- 	c = OSC.new arguments["<codestream>"], arguments["<package>"]
+ 	c = OSC.new arguments["<codestream>"], arguments["<package>"], arguments["--sources"]
 	if c.remote_exist?
 		if c.local_exist?
  			puts c.update
@@ -39,7 +42,7 @@ when arguments["prepare"]
 		puts "#{ARGV[0]} #{ARGV[1]} doesn\'t exist"
 	end
 when arguments["index"]
-	ZoektIndex.new(arguments["<codestream>"]).run
+	ZoektIndex.new(arguments["<codestream>"], arguments["--ncpus"], arguments["--sources"], arguments["--indexdir"]).run
 end
 
 
