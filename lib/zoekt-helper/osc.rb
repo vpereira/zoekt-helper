@@ -8,7 +8,7 @@ class OSC
 		@package = package
 		@spec = "#{@package}.spec"
 		# configure your osc first
-		unless File.exists? File.join(ENV["HOME"],".oscrc")
+		unless File.exist? File.join(ENV["HOME"],".oscrc")
 			raise Errno::ENOENT, "osc not initialized, please configure it first" 
 		end
 		@directory = directory
