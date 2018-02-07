@@ -18,7 +18,7 @@ class OSC
 
   def delete
     FileUtils.rm_r("#{@codestream}/#{@package}", secure: true) if local_exist?
-   end
+  end
 
   def update
     execute(['up', "#{@codestream}/#{@package}"])
