@@ -24,6 +24,10 @@ class OSC
     execute(['up', "#{@codestream}/#{@package}"])
   end
 
+  def maintained
+    execute(['maintained', @package]).split("\n") rescue []
+  end
+
   def checkout
     execute(['co', @codestream, @package])
   end
